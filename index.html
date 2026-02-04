@@ -94,7 +94,7 @@
                     { "text": "select * from employees e, departments d where e.department_id=d.department_id and e.manager_id=d.manager_id;", "isCorrect": true },
                     { "text": "select * from employees, departments;", "isCorrect": false },
                     { "text": "select * from employees natural join departments;", "isCorrect": false },
-                    { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": true },
+                    { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": false },
                     { "text": "select * from employees e, departments d where e.manager_id=d.manager_id;", "isCorrect": false }
                 ]
             },
@@ -144,6 +144,66 @@
                     { "text": "Vertical scalability is applied for relational DBMSs", "isCorrect": true },
                     { "text": "Horizontal scalability is applied for SQL DBMSs", "isCorrect": false },
                     { "text": "Horizontal scalability is applied for NoSQL DBMSs", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 6,
+                "question": "Choose the right answers about SQL commands:",
+                "image": null,
+                "answers": [
+                    { "text": "ALTER VIEW modifies a view", "isCorrect": true },
+                    { "text": "ALTER command is part of the DDL", "isCorrect": true },
+                    { "text": "A view may be modified using CREATE OR REPLACE VIEW command.", "isCorrect": true },
+                    { "text": "ALTER VIEW modifies a table", "isCorrect": false },
+                    { "text": "COMMIT completes all previous transactions", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 7,
+                "question": "Having the table STUDENT (name, year, group, no_stud_group, group_secretary, birth_date) and the primary key (name, group), what affirmation(s) is(are) not true:",
+                "image": null,
+                "answers": [
+                    { "text": "The table has a composed primary key", "isCorrect": false },
+                    { "text": "The table is in 2NF", "isCorrect": true },
+                    { "text": "The table has a fully functionally dependence", "isCorrect": false },
+                    { "text": "The table is normalized", "isCorrect": true },
+                    { "text": "The table is in 3NF", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 8,
+                "question": "What are the characteristics of the relational model?",
+                "image": null,
+                "answers": [
+                    { "text": "It made the transition to a new generation (the second).", "isCorrect": false },
+                    { "text": "The model implementation is made at logical level by attributes with key roles.", "isCorrect": true },
+                    { "text": "It was proposed by IBM and revolutionized the representation of data in the database.", "isCorrect": true },
+                    { "text": "The model is simple, has a solid theoretical foundation being based on the set theory (assemblies) and mathematical logic.", "isCorrect": true },
+                    { "text": "All types of highly complex data structures from different fields can be represented using this model.", "isCorrect": false }
+                ]
+            },
+            {
+                "id": 9,
+                "question": "In a table one can have:",
+                "image": null,
+                "answers": [
+                    { "text": "A simple primary key", "isCorrect": true },
+                    { "text": "A foreign primary key", "isCorrect": false },
+                    { "text": "A control key", "isCorrect": false },
+                    { "text": "A simple foreign key", "isCorrect": true },
+                    { "text": "A composed primary key", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 10,
+                "question": "In the components architecture, the Data component refers to:",
+                "image": null,
+                "answers": [
+                    { "text": "Data dictionary", "isCorrect": true },
+                    { "text": "Hardware resources", "isCorrect": false },
+                    { "text": "Actual data collections", "isCorrect": true },
+                    { "text": "Related files", "isCorrect": true },
+                    { "text": "Database management system", "isCorrect": false }
                 ]
             }
         ];
