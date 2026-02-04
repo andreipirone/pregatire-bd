@@ -97,6 +97,54 @@
                     { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": false },
                     { "text": "select * from employees e, departments d where e.manager_id=d.manager_id;", "isCorrect": false }
                 ]
+            },
+            {
+                "id": 2,
+                "question": "In order to determine the DB efficiency, the following costs should be studied:",
+                "image": null,
+                "answers": [
+                    { "text": "cost of required hardware;", "isCorrect": true },
+                    { "text": "cost of technical advice;", "isCorrect": true },
+                    { "text": "cost imposed by the transition from the existing system to the DB system;", "isCorrect": true },
+                    { "text": "cost of necessary resources (human, material, informational, etc.);", "isCorrect": true },
+                    { "text": "cost of necessary software;", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 3,
+                "question": "Specify what kind of crossing is performed in the following hierarchical query. select employee_id, name, surname, manager_id, level from employees connect by manager_id = prior employee_id start with name = 'Dumitru' and surname = 'Stefan';",
+                "image": null,
+                "answers": [
+                    { "text": "Straight up", "isCorrect": false },
+                    { "text": "Top down", "isCorrect": true },
+                    { "text": "Bottom up", "isCorrect": false },
+                    { "text": "It's not an hierarchical query", "isCorrect": false },
+                    { "text": "Bottom down", "isCorrect": false }
+                ]
+            },
+            {
+                "id": 4,
+                "question": "Comparative concepts regarding the organization of data in Files and in Relational Databases:",
+                "image": null,
+                "answers": [
+                    { "text": "The record corresponds to the tuple", "isCorrect": true },
+                    { "text": "The file corresponds to the relation", "isCorrect": true },
+                    { "text": "The record corresponds to the object", "isCorrect": false },
+                    { "text": "The field corresponds to the attribute", "isCorrect": true },
+                    { "text": "The file corresponds to the table", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 5,
+                "question": "Choose the correct answers regarding scalability in database management systems.",
+                "image": null,
+                "answers": [
+                    { "text": "Vertical scalability means scaling by adding more power (CPU, RAM) to an existing machine", "isCorrect": true },
+                    { "text": "Horizontal scalability means scaling by adding more power (CPU, RAM) to an existing machine", "isCorrect": false },
+                    { "text": "Vertical scalability is applied for relational DBMSs", "isCorrect": true },
+                    { "text": "Horizontal scalability is applied for SQL DBMSs", "isCorrect": false },
+                    { "text": "Horizontal scalability is applied for NoSQL DBMSs", "isCorrect": true }
+                ]
             }
         ];
 
@@ -109,12 +157,14 @@
                     const cleanText = ans.text.replace(/^[a-zA-Z]\)\s*/, '');
                     return { id: optId, text: cleanText, isCorrect: ans.isCorrect };
                 });
-                const correctOpt = options.find(o => o.isCorrect);
+                const correctOpts = options.filter(o => o.isCorrect).map(o => o.id);
                 return {
                     id: q.id,
                     text: q.question,
+                    image: q.image,
                     options: options,
-                    correctAnswer: correctOpt ? correctOpt.id : null
+                    correctAnswers: correctOpts, // Now an array of all correct IDs
+                    isMultiSelect: correctOpts.length > 1
                 };
             });
         }
@@ -180,15 +230,23 @@
                     <div className="space-y-2 flex-grow">
                         {question.options.map((opt) => {
                             let btnClass = "relative w-full p-3 text-left rounded-lg border transition-all duration-200 flex items-start gap-3 group ";
-                            const isSelected = selectedOption === opt.id;
-                            const isCorrect = opt.id === question.correctAnswer;
+
+                            // Normalize selectedOption to array
+                            const currentSelected = Array.isArray(selectedOption) ? selectedOption : (selectedOption ? [selectedOption] : []);
+                            const isSelected = currentSelected.includes(opt.id);
+
+                            // Check against correctAnswers array
+                            const isCorrect = question.correctAnswers && question.correctAnswers.includes(opt.id);
 
                             if (showFeedback) {
                                 if (isCorrect) {
+                                    // Always show correct answers in green
                                     btnClass += "bg-green-50 dark:bg-green-900/20 border-green-500 text-green-900 dark:text-green-300";
                                 } else if (isSelected && !isCorrect) {
+                                    // Selected wrong answers in red
                                     btnClass += "bg-red-50 dark:bg-red-900/20 border-red-500 text-red-900 dark:text-red-300";
                                 } else {
+                                    // Unselected wrong answers
                                     btnClass += "bg-gray-50 dark:bg-gray-800/50 border-gray-100 dark:border-gray-700 text-gray-400 dark:text-gray-500 opacity-60";
                                 }
                             } else {
@@ -206,12 +264,15 @@
                                     disabled={showFeedback && mode === 'exam'}
                                     className={btnClass}
                                 >
-                                    <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border transition-colors ${showFeedback && isCorrect ? 'bg-green-500 text-white border-green-500' :
+                                    <div className={`flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold border transition-colors ${showFeedback && isCorrect ? 'bg-green-500 text-white border-green-500' :
                                         showFeedback && isSelected && !isCorrect ? 'bg-red-500 text-white border-red-500' :
                                             isSelected ? 'bg-blue-600 text-white border-blue-600' :
                                                 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-600'
                                         }`}>
-                                        {opt.id.toUpperCase()}
+                                        {question.isMultiSelect
+                                            ? (isSelected ? <i className="ph-bold ph-check text-xs"></i> : <span className="w-2 h-2 rounded-sm bg-gray-300 dark:bg-gray-600"></span>)
+                                            : opt.id.toUpperCase()
+                                        }
                                     </div>
                                     <span className="mt-0.5 flex-grow font-medium text-sm leading-snug">{opt.text}</span>
 
@@ -524,7 +585,15 @@
                 if (!isSubmitted) return null;
                 let correct = 0;
                 questions.forEach(q => {
-                    if (answers[q.id] === q.correctAnswer) correct++;
+                    const userVal = answers[q.id];
+                    // Normalize both to arrays for comparison
+                    const userArr = Array.isArray(userVal) ? userVal.sort() : (userVal ? [userVal] : []);
+                    const correctArr = q.correctAnswers ? [...q.correctAnswers].sort() : [];
+
+                    // JSON stringify is a quick way to compare sorted arrays of primitives
+                    if (JSON.stringify(userArr) === JSON.stringify(correctArr)) {
+                        correct++;
+                    }
                 });
                 return { correct, total: questions.length };
             }, [isSubmitted, answers, questions]);
@@ -709,8 +778,23 @@
             }, [isDark]);
 
             // HANDLERS
+            // HANDLERS
             const handleAnswer = (qId, optId) => {
-                setAnswers(prev => ({ ...prev, [qId]: optId }));
+                setAnswers(prev => {
+                    const question = activeQuestions.find(q => q.id === qId);
+                    const isMulti = question?.isMultiSelect;
+
+                    if (isMulti) {
+                        const currentSelected = prev[qId] || [];
+                        const newSelected = currentSelected.includes(optId)
+                            ? currentSelected.filter(id => id !== optId)
+                            : [...currentSelected, optId];
+                        return { ...prev, [qId]: newSelected };
+                    }
+
+                    // Single select behavior
+                    return { ...prev, [qId]: [optId] }; // Now storing as array even for single select for consistency
+                });
             };
 
             const handlePracticeSubmit = () => {
