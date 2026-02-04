@@ -94,7 +94,7 @@
                     { "text": "select * from employees e, departments d where e.department_id=d.department_id and e.manager_id=d.manager_id;", "isCorrect": true },
                     { "text": "select * from employees, departments;", "isCorrect": false },
                     { "text": "select * from employees natural join departments;", "isCorrect": false },
-                    { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": false },
+                    { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": true },
                     { "text": "select * from employees e, departments d where e.manager_id=d.manager_id;", "isCorrect": false }
                 ]
             },
@@ -112,7 +112,7 @@
             },
             {
                 "id": 3,
-                "question": "Specify what kind of crossing is performed in the following hierarchical query. select employee_id, name, surname, manager_id, level from employees connect by manager_id = prior employee_id start with name = 'Dumitru' and surname = 'Stefan';",
+                "question": "Specify what kind of crossing is performed in the following hierarchical query: \n select employee_id, name, surname, manager_id, level from employees connect by manager_id = prior employee_id start with name = 'Dumitru' and surname = 'Stefan';",
                 "image": null,
                 "answers": [
                     { "text": "Straight up", "isCorrect": false },
@@ -204,6 +204,18 @@
                     { "text": "Actual data collections", "isCorrect": true },
                     { "text": "Related files", "isCorrect": true },
                     { "text": "Database management system", "isCorrect": false }
+                ]
+            },
+            {
+                "id": 11,
+                "question": "Having the following command, what statement is true: CREATE TABLE flowers (id NUMBER, name VARCHAR2 (60)) PARTITION BY HASH (id) PARTITIONS 4 STORE IN (garden1, garden2, garden3, garden4);",
+                "image": null,
+                "answers": [
+                    { "text": "this is an example of range partitioning.", "isCorrect": false },
+                    { "text": "The \"id\" is the partitioning key.", "isCorrect": true },
+                    { "text": "this is an example of list partitioning.", "isCorrect": false },
+                    { "text": "The \"garden\" is the partitioning key.", "isCorrect": false },
+                    { "text": "this is an example of hash partitioning.", "isCorrect": true }
                 ]
             }
         ];
