@@ -89,12 +89,12 @@
             {
                 "id": 1,
                 "question": "Display the employees that have the same manager as the manager of their department.",
-                "image": "hr_schema.png",
+                "image": "res/hr_schema.png",
                 "answers": [
                     { "text": "select * from employees e, departments d where e.department_id=d.department_id and e.manager_id=d.manager_id;", "isCorrect": true },
                     { "text": "select * from employees, departments;", "isCorrect": false },
                     { "text": "select * from employees natural join departments;", "isCorrect": false },
-                    { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": true },
+                    { "text": "select * from employees e join departments d using(manager_id, department_id);", "isCorrect": false },
                     { "text": "select * from employees e, departments d where e.manager_id=d.manager_id;", "isCorrect": false }
                 ]
             },
@@ -112,7 +112,7 @@
             },
             {
                 "id": 3,
-                "question": "Specify what kind of crossing is performed in the following hierarchical query: \n select employee_id, name, surname, manager_id, level from employees connect by manager_id = prior employee_id start with name = 'Dumitru' and surname = 'Stefan';",
+                "question": "Specify what kind of crossing is performed in the following hierarchical query. select employee_id, name, surname, manager_id, level from employees connect by manager_id = prior employee_id start with name = 'Dumitru' and surname = 'Stefan';",
                 "image": null,
                 "answers": [
                     { "text": "Straight up", "isCorrect": false },
@@ -216,6 +216,65 @@
                     { "text": "this is an example of list partitioning.", "isCorrect": false },
                     { "text": "The \"garden\" is the partitioning key.", "isCorrect": false },
                     { "text": "this is an example of hash partitioning.", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 12,
+                "question": "The next query is equivalent with:",
+                "image": "res/id12.png",
+                "answers": [
+                    { "text": "SELECT MIN (salary) AS min_salary, d.department_id, d.department_name FROM employees e inner join departments d on e.department_id = d.department_id GROUP BY d.department_id, d.department_name;", "isCorrect": false },
+                    { "text": "SELECT MIN (salary) AS \" min_salary\", d.department_id, d.department_name FROM employees e, departments d WHERE e.department_id(+) = d.department_id and e.department_id = d.department_id (+) GROUP BY d.department_id, d.department_name;", "isCorrect": false },
+                    { "text": "SELECT MIN (salary) AS min_salary, d.department_id, d.department_name FROM employees e full outer join departments d on e.department_id = d.department_id GROUP BY d.department_id, d.department_name;", "isCorrect": true },
+                    { "text": "SELECT MIN (salary) AS min_salary, d.department_id, d.department_name FROM employees e, departments d WHERE e.department_id(+) = d.department_id (+) GROUP BY d.department_id, d.department_name;", "isCorrect": false }
+                ]
+            },
+            {
+                "id": 13,
+                "question": "The dynamic analysis of a database system:",
+                "image": null,
+                "answers": [
+                    { "text": "Identifies the entities", "isCorrect": false },
+                    { "text": "Identifies the states", "isCorrect": true },
+                    { "text": "Identifies the events", "isCorrect": true },
+                    { "text": "Has as result the data flow diagram", "isCorrect": false },
+                    { "text": "Identifies the relationships", "isCorrect": false }
+                ]
+            },
+            {
+                "id": 14,
+                "question": "Choose the correct answer.",
+                "image": null,
+                "answers": [
+                    { "text": "A table is NF4 if and only if is NF3 and is not containing two or more multivalue dependencies.", "isCorrect": true },
+                    { "text": "A table is in the 2nd NF if all its attributes contain basic values (nondecomposable) meaning that each tuple must not have group or repetitive data.", "isCorrect": false },
+                    { "text": "A table in NF2 still has a number of update anomalies due any multi-value dependencies.", "isCorrect": false },
+                    { "text": "A table in NF2 still has a number of update anomalies due to any transitive dependencies.", "isCorrect": true },
+                    { "text": "A table is in the 2nd NF if and only if is in NF1 and each non-key attribute of the table is fully functionally dependent on the key.", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 15,
+                "question": "Comparative concepts regarding the organization of data in Files and in Relational Databases:",
+                "image": null,
+                "answers": [
+                    { "text": "The record corresponds to the object", "isCorrect": false },
+                    { "text": "The file corresponds to the relation", "isCorrect": true },
+                    { "text": "The record corresponds to the tuple", "isCorrect": true },
+                    { "text": "The file corresponds to the table", "isCorrect": true },
+                    { "text": "The field corresponds to the attribute", "isCorrect": true }
+                ]
+            },
+            {
+                "id": 16,
+                "question": "A data model consists of:",
+                "image": null,
+                "answers": [
+                    { "text": "Integrity rules", "isCorrect": true },
+                    { "text": "Defining entities and associated attributes", "isCorrect": true },
+                    { "text": "Model's logic", "isCorrect": false },
+                    { "text": "Model's operators", "isCorrect": true },
+                    { "text": "Model's language", "isCorrect": false }
                 ]
             }
         ];
