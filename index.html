@@ -89,7 +89,7 @@
             {
                 "id": 1,
                 "question": "Display the employees that have the same manager as the manager of their department.",
-                "image": "(image)",
+                "image": "hr_schema.png",
                 "answers": [
                     { "text": "select * from employees e, departments d where e.department_id=d.department_id and e.manager_id=d.manager_id;", "isCorrect": true },
                     { "text": "select * from employees, departments;", "isCorrect": false },
@@ -215,14 +215,22 @@
                         </h2>
                         {question.image && (
                             <div className="mt-3 mb-2">
-                                <span className="text-xs text-gray-400 italic block mb-1">Image: {question.image}</span>
-                                {/* Placeholder for actual image if URL provided later */}
-                                <div className="w-full h-32 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center border border-dashed border-gray-300 dark:border-gray-600">
-                                    <span className="text-sm text-gray-500 dark:text-gray-400 font-medium flex items-center gap-2">
-                                        <i className="ph-bold ph-image"></i>
-                                        {question.image === "(image)" ? "Question Image Placeholder" : question.image}
-                                    </span>
-                                </div>
+                                {question.image === "(image)" ? (
+                                    <div className="w-full h-32 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center border border-dashed border-gray-300 dark:border-gray-600">
+                                        <span className="text-sm text-gray-500 dark:text-gray-400 font-medium flex items-center gap-2">
+                                            <i className="ph-bold ph-image"></i>
+                                            Question Image Placeholder
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                                        <img
+                                            src={question.image}
+                                            alt="Question Diagram"
+                                            className="w-full h-auto max-h-96 object-contain bg-white"
+                                        />
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
